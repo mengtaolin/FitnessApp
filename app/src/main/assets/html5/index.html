@@ -12,6 +12,10 @@
 			function cancle(e){
 				android.gotoWebView("https://www.baidu.com");
 			}
+			function addItem(){
+				var div = document.querySelector("#div");
+				div.innerHTML = "hello"
+      		}
 		</script>
 
 	</head>
@@ -31,6 +35,7 @@
 				<button type="button" class="mui-btn mui-btn-danger" onclick="cancle(event)">取消</button>
 			</div>
 		</form>
+		<div id="div"></div>
 	</body>
 
 </html>

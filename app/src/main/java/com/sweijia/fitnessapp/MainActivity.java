@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         this.initHtml();
+//        webView.loadUrl("javascript:addItem()");
     }
 
     private void initHtml(){
