@@ -18,6 +18,7 @@ import com.sweijia.fitnessapp.utils.WebViewUtil;
 
 import java.util.HashMap;
 import java.util.Map;
+
 public class MainActivity extends AppCompatActivity {
 
     private WebView webView;
