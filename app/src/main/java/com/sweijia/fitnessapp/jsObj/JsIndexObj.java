@@ -16,10 +16,20 @@ public class JsIndexObj {
 
     @JavascriptInterface
     public void gotoWebView(final String url){
+//        webView.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                webView.loadUrl(url);
+//            }
+//        });
+        doJsFun();
+    }
+
+    public void doJsFun(){
         webView.post(new Runnable() {
             @Override
             public void run() {
-                webView.loadUrl(url);
+                webView.loadUrl("javascript:addItem()");
             }
         });
     }
