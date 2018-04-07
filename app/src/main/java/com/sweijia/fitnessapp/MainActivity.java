@@ -1,6 +1,10 @@
 package com.sweijia.fitnessapp;
 
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +18,8 @@ import android.webkit.WebViewClient;
 import com.sweijia.fitnessapp.js.JsWebChromeClient;
 import com.sweijia.fitnessapp.js.JsWebViewClient;
 import com.sweijia.fitnessapp.jsObj.JsIndexObj;
+import com.sweijia.fitnessapp.managers.MusicDaoManager;
+import com.sweijia.fitnessapp.services.MusicService;
 import com.sweijia.fitnessapp.utils.WebViewUtil;
 
 import java.util.HashMap;
@@ -23,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
 
     private WebView webView;
     private Map<Integer, String> urlMap;
+    private MusicDaoManager manager;
+    private MusicService musicService;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -40,16 +48,35 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    private ServiceConnection sc = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            musicService = ((MusicService.MyBinder)iBinder).getService();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            musicService = null;
+        }
+    };
+    private void bindServiceConnection() {
+        Intent intent = new Intent(MainActivity.this, MusicService.class);
+        startService(intent);
+        bindService(intent, sc, this.BIND_AUTO_CREATE);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.initDatas();
         setContentView(R.layout.activity_main);
-
+        manager = MusicDaoManager.getInstance(this);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         this.initWebView();
         this.initHtml();
+        bindServiceConnection();
+        System.out.print(musicService);
     }
 
     private void initDatas() {
