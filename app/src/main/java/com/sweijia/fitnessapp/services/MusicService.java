@@ -37,8 +37,12 @@ public class MusicService extends Service {
                 return;
             }
             musicIndex = (int) Math.floor(Math.random() * musicList.size());
-            mp.setDataSource(musicList.get(musicIndex).getUri());
+            MusicDao dao = musicList.get(musicIndex);
+            String url = dao.getUri();
+            mp.setDataSource(url);
             mp.prepare();
+            mp.setVolume(1, 1);
+            mp.start();
         } catch (Exception e) {
             Log.d("hint","can't get to the song");
             e.printStackTrace();
@@ -63,7 +67,19 @@ public class MusicService extends Service {
         }
     }
     public void nextMusic() {
-        if(mp != null && musicIndex > 2) {
+        playOne(false);
+    }
+    public void preMusic() {
+        this.playOne(true);
+    }
+
+    private void playOne(Boolean isPre){
+        if(mp == null)return;
+        musicIndex = isPre ? --musicIndex : ++musicIndex;
+        if(musicIndex < 0){
+            musicIndex = musicList.size() - 1;
+        }
+        else if(musicIndex >= musicList.size()){
             musicIndex = 0;
         }
         mp.stop();
@@ -75,22 +91,6 @@ public class MusicService extends Service {
             mp.start();
         } catch (Exception e) {
             Log.d("hint", "can't jump next music");
-            e.printStackTrace();
-        }
-    }
-    public void preMusic() {
-        if(mp != null && musicIndex < 0) {
-            musicIndex = musicList.size() - 1;
-        }
-        mp.stop();
-        try {
-            mp.reset();
-            mp.setDataSource(musicList.get(--musicIndex).getUri());
-            mp.prepare();
-            mp.seekTo(0);
-            mp.start();
-        } catch (Exception e) {
-            Log.d("hint", "can't jump pre music");
             e.printStackTrace();
         }
     }

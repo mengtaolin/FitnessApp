@@ -3,9 +3,9 @@ package com.sweijia.fitnessapp.daos;
 public class MusicDao {
     // id title singer data time image
     private int id; // 音乐id
-    private String title; // 音乐标题
+    private String displayName; // 音乐标题
     private String uri; // 音乐路径
-    private int length; // 长度
+    private int duration; // 长度
     private String image; // icon
     private String artist; // 艺术家
     private Long size;
@@ -18,12 +18,12 @@ public class MusicDao {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getDisplayName() {
+        return displayName;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
     public String getUri() {
@@ -34,12 +34,12 @@ public class MusicDao {
         this.uri = uri;
     }
 
-    public int getLength() {
-        return length;
+    public int getDuration() {
+        return duration;
     }
 
-    public void setLength(int length) {
-        this.length = length;
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 
     public String getImage() {
@@ -67,11 +67,11 @@ public class MusicDao {
     }
 
     public String formatTime() {
-        if (length / 1000 % 60 < 10) {
-            String tt = length / 1000 / 60 + ":0" + length / 1000 % 60;
+        if (duration / 1000 % 60 < 10) {
+            String tt = duration / 1000 / 60 + ":0" + duration / 1000 % 60;
             return tt;
         } else {
-            String tt = length / 1000 / 60 + ":" + length / 1000 % 60;
+            String tt = duration / 1000 / 60 + ":" + duration / 1000 % 60;
             return tt;
         }
     }

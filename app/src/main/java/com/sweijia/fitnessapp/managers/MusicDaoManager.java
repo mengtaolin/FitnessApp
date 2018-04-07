@@ -38,10 +38,10 @@ public class MusicDaoManager {
             if (_cursor != null) {
                 while (_cursor.moveToNext()) {
                     MusicDao dao = new MusicDao();
-                    dao.setTitle(_cursor.getString(getIndex(MediaStore.Audio.Media.DISPLAY_NAME)));
+                    dao.setDisplayName(_cursor.getString(getIndex(MediaStore.Audio.Media.DISPLAY_NAME)));
                     dao.setArtist(_cursor.getString(getIndex(MediaStore.Audio.Media.ARTIST)));
                     dao.setUri(_cursor.getString(getIndex(MediaStore.Audio.Media.DATA)));
-                    dao.setLength(_cursor.getInt(getIndex(MediaStore.Audio.Media.DURATION)));
+                    dao.setDuration(_cursor.getInt(getIndex(MediaStore.Audio.Media.DURATION)));
                     dao.setSize(_cursor.getLong(getIndex(MediaStore.Audio.Media.SIZE)));
                     musicList.add(dao);
                 }
